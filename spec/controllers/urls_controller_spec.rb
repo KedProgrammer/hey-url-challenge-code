@@ -5,37 +5,20 @@ require 'rails_helper'
 RSpec.describe UrlsController, type: :controller do
   describe 'GET #index' do
     it 'shows the latest 10 URLs' do
-      skip 'add test'
-    end
-  end
-
-  describe 'POST #create' do
-    it 'creates a new url' do
-      skip 'add test'
-    end
-  end
-
-  describe 'GET #show' do
-    it 'shows stats about the given URL' do
-      skip 'add test'
+      get :index
+      expect(response).to render_template(:index)
     end
 
-    it 'throws 404 when the URL is not found' do
-      skip 'add test'
-    end
-  end
-
-  describe 'GET #visit' do
-    it 'tracks click event and stores platform and browser information' do
-      skip 'add test'
+    it 'creates an url' do
+      count = Url.all.count
+      post :create, params: { url: {original_url: 'http://www.google.com' } }, xhr: true
+      expect(Url.all.count).to eql(count + 1)
     end
 
-    it 'redirects to the original url' do
-      skip 'add test'
-    end
-
-    it 'throws 404 when the URL is not found' do
-      skip 'add test'
+    it 'creates an url' do
+      url = Url.create(original_url: 'http://www.google.com')
+      get :show, params: { id: url.id }
+      expect(response).to render_template(:show)
     end
   end
 end

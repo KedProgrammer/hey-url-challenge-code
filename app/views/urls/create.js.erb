@@ -1,0 +1,13 @@
+
+<% if @url.errors.empty? %>
+  $('.main_table').append("<%= j render 'url_item', url: @url %>")
+  swal({
+  title: "Good job!",
+  action: "success"
+  })
+<% else %>
+  swal({
+  title: '<%= "#{@url.errors.full_messages.join} e.g http://www.google.com" %>',
+  action: "danger"
+  })
+<%  end %>
